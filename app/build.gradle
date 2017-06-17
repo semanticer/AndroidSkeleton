@@ -11,7 +11,7 @@ android {
     buildToolsVersion "25.0.3"
 
     defaultConfig {
-        applicationId "cz.inventi.inventiskeleton"
+        applicationId "cz.leaderboard.app"
         minSdkVersion 19
         targetSdkVersion 26
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -33,15 +33,6 @@ android {
     }
 
     productFlavors {
-
-        dev {
-            signingConfig signingConfigs.debug
-            versionCode gitVersionCodeTime
-            versionName gitVersionName
-            applicationIdSuffix '.dev'
-
-            buildConfigField "String", "BASE_API_URL", "\"https://jsonplaceholder.typicode.com/\""
-        }
 
         prod {
             signingConfig signingConfigs.release
@@ -114,8 +105,6 @@ dependencies {
 
     compile "com.google.firebase:firebase-core:$firebase"
     compile "com.google.firebase:firebase-database:$firebase"
-    compile 'com.github.frangsierra:rx2firebase:1.1.3'
-
 
     // RxJava
     compile "io.reactivex.rxjava2:rxandroid:$rxJava"
@@ -137,7 +126,6 @@ dependencies {
     compile "com.google.dagger:dagger-android-support:$dagger"
     kapt "com.google.dagger:dagger-compiler:$dagger"
     kapt "com.google.dagger:dagger-android-processor:$dagger"
-    provided 'org.glassfish:javax.annotation:10.0-b28'
 
     // retrofit
     compile "com.squareup.retrofit2:retrofit:$retrofit"
@@ -151,8 +139,6 @@ dependencies {
     compile "com.facebook.stetho:stetho:$stetho"
     compile "com.facebook.stetho:stetho-okhttp3:$stetho"
 
-    compile 'com.f2prateek.rx.preferences2:rx-preferences:2.0.0-RC2'
-
     // butterKnife
 //    compile "com.jakewharton:butterknife:$butterKnife"
 //    kapt "com.jakewharton:butterknife-compiler:$butterKnife"
@@ -162,7 +148,6 @@ dependencies {
     compile "com.jakewharton.rxbinding2:rxbinding-support-v4:$rxBinding"
     compile "com.jakewharton.rxbinding2:rxbinding-appcompat-v7:$rxBinding"
 
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
 
     debugCompile "com.squareup.leakcanary:leakcanary-android:$leakCanary"
     releaseCompile "com.squareup.leakcanary:leakcanary-android-no-op:$leakCanary"
@@ -196,11 +181,15 @@ dependencies {
 
     // kotlin specific testing
     testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
-    testCompile "com.nhaarman:mockito-kotlin-kt1.1:1.5.0"
-    testCompile 'org.amshove.kluent:kluent:1.14'
 
     androidTestCompile "com.android.support:support-annotations:$supportLib"
 
+    compile 'com.github.frangsierra:rx2firebase:1.1.3'
+    compile 'com.f2prateek.rx.preferences2:rx-preferences:2.0.0-RC2'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    testCompile 'com.nhaarman:mockito-kotlin-kt1.1:1.5.0'
+    testCompile 'org.amshove.kluent:kluent:1.14'
+    provided 'org.glassfish:javax.annotation:10.0-b28'
 }
 
 /*
@@ -223,6 +212,7 @@ configurations.compile.dependencies.each { compileDependency ->
         configurations.androidTestCompile.exclude module: "${compileDependency.getName()}"
     }
 }
+
 
 
 apply plugin: 'com.google.gms.google-services'
