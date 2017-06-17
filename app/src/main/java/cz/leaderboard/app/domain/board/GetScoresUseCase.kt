@@ -18,11 +18,15 @@ class GetScoresUseCase @Inject constructor(val leaderboardRepository: Leaderboar
     : UseCase<List<LeaderboardRecord>, GetScoresUseCase.Params>(threadExecutor, postExecutionThread) {
 
     override fun buildUseCaseObservable(params: Params): Flowable<List<LeaderboardRecord>> {
-        return leaderboardRepository.getUsers(params.boardId).map { users ->
-            users.map { LeaderboardRecord(it, "Piv")}.reversed()
+        val boardId = leaderboardRepository.getCurrentBoard()
+        if (boardId == null) {
+            return Flowable.error { Throwable("No board selected") }
+        } else {
+            return leaderboardRepository.getUsers(boardId).map { users ->
+                users.map { LeaderboardRecord(it, "Piv") }.reversed()
+            }
         }
     }
 
-
-    data class Params(val boardId: String)
+    class Params
 }

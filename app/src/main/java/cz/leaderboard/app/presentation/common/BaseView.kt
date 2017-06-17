@@ -18,4 +18,11 @@ interface BaseView : MvpView {
             Snackbar.make(it, errorText, Snackbar.LENGTH_LONG).show()
         }
     }
+
+    fun showMessage(msgText: String) {
+        val content: ViewGroup? = getParentActivity()?.findViewById(android.R.id.content)
+        content?.getChildAt(0)?.let {
+            Snackbar.make(it, msgText, Snackbar.LENGTH_LONG).show()
+        }
+    }
 }

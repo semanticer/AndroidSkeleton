@@ -1,5 +1,6 @@
 package cz.leaderboard.app.presentation.board
 
+import android.support.design.widget.FloatingActionButton
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -19,6 +20,7 @@ import javax.inject.Inject
 class BoardController : BaseController<BoardView, BoardPresenter>(), BoardView {
 
     internal val listView: RecyclerView by bindView(R.id.record_list)
+    internal val addBtn: FloatingActionButton by bindView(R.id.add_btn)
 
     @Inject lateinit var boardPresenter: BoardPresenter
 
@@ -36,14 +38,20 @@ class BoardController : BaseController<BoardView, BoardPresenter>(), BoardView {
     override fun createPresenter(): BoardPresenter = boardPresenter
 
     override fun onViewBind(view: View) {
-        listView.setHasFixedSize(true)
+        listView.setHasFixedSize(false)
         listView.layoutManager = LinearLayoutManager(activity)
         listView.adapter = recordAdapter
+        RxView.clicks(addBtn).subscribe({presenter.onAddClicked()})
     }
 
     override fun showRecordData(recordList: List<LeaderboardRecord>) {
         recordAdapter.updateData(recordList)
     }
+
+    override fun showAddScore(addedScore: Int) {
+        showError("You've got $addedScore new points")
+    }
+
 
 
 

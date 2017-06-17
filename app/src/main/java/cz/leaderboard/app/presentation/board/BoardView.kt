@@ -8,4 +8,5 @@ import cz.leaderboard.app.presentation.common.BaseView
  */
 interface BoardView : BaseView {
     fun showRecordData(recordList: List<LeaderboardRecord>)
+    fun showAddScore(addedScore: Int)
 }

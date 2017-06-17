@@ -16,6 +16,9 @@ import cz.leaderboard.app.presentation.intro.IntroPresenter
 import javax.inject.Inject
 import android.content.Intent
 import android.net.Uri
+import android.text.InputType
+import android.widget.EditText
+import com.bluelinelabs.conductor.RouterTransaction
 
 
 /**
@@ -25,7 +28,7 @@ class IntroController : BaseController<IntroView, IntroPresenter>(), IntroView {
 
     internal val boardList: RecyclerView by bindView(R.id.board_list)
     internal val searchBtn: Button by bindView(R.id.search_btn)
-    internal val searchEdit: Button by bindView(R.id.search_edit)
+    internal val searchEdit: EditText by bindView(R.id.search_edit)
     internal val startNewBtn: Button by bindView(R.id.start_new_btn)
 
 
@@ -44,11 +47,12 @@ class IntroController : BaseController<IntroView, IntroPresenter>(), IntroView {
     override fun createPresenter(): IntroPresenter = introPresenter
 
     override fun onViewBind(view: View) {
+        searchEdit.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS or InputType.TYPE_NUMBER_VARIATION_PASSWORD
         RxView.clicks(searchBtn)
                 .map{ _ -> searchEdit.text.toString() }
                 .subscribe({introPresenter.onSearchClicked(it)})
 
-        RxView.clicks(searchBtn).subscribe({ introPresenter.onCreateNewClicked()})
+        RxView.clicks(startNewBtn).subscribe({ introPresenter.onCreateNewClicked()})
     }
 
     override fun showCreateNew() {
@@ -59,11 +63,11 @@ class IntroController : BaseController<IntroView, IntroPresenter>(), IntroView {
     }
 
     override fun showFoundBoard() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        router.pushController(RouterTransaction.with(BoardController()))
     }
 
     override fun showSearchError() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        showError("Sorry, We didn't found this board")
     }
 
     override fun showTopBoards() {
