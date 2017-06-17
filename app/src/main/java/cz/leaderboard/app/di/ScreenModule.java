@@ -7,8 +7,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import javax.inject.Named;
 import cz.leaderboard.app.data.repository.FirebaseLeaderboardRepository;
 import cz.leaderboard.app.domain.LeaderboardRepository;
-import cz.leaderboard.app.domain.board.GetLeaderboardUseCase;
+import cz.leaderboard.app.domain.board.GetScoresUseCase;
 import cz.leaderboard.app.presentation.board.BoardPresenter;
+import cz.leaderboard.app.presentation.intro.IntroPresenter;
 import dagger.Module;
 import dagger.Provides;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -29,14 +30,20 @@ public class ScreenModule {
 
     @Provides
     @ScreenScope
-    static BoardPresenter providePostListPresenter(GetLeaderboardUseCase getLeaderboardUseCase){
-        return new BoardPresenter(getLeaderboardUseCase);
+    static BoardPresenter providePostListPresenter(GetScoresUseCase getScoresUseCase){
+        return new BoardPresenter(getScoresUseCase);
     }
 
     @Provides
     @ScreenScope
-    static GetLeaderboardUseCase provideGetLeaderboardUseCase(LeaderboardRepository leaderboardRepository){
-        return new GetLeaderboardUseCase(leaderboardRepository, Schedulers::newThread, AndroidSchedulers::mainThread);
+    static IntroPresenter provideIntroPresenter(){
+        return new IntroPresenter();
+    }
+
+    @Provides
+    @ScreenScope
+    static GetScoresUseCase provideGetLeaderboardUseCase(LeaderboardRepository leaderboardRepository){
+        return new GetScoresUseCase(leaderboardRepository, Schedulers::newThread, AndroidSchedulers::mainThread);
     }
 
     @Provides

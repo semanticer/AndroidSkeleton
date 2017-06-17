@@ -1,7 +1,7 @@
 package cz.leaderboard.app.presentation.board
 
 import com.hannesdorfmann.mosby3.mvp.MvpNullObjectBasePresenter
-import cz.leaderboard.app.domain.board.GetLeaderboardUseCase
+import cz.leaderboard.app.domain.board.GetScoresUseCase
 import cz.leaderboard.app.domain.board.LeaderboardRecord
 import cz.leaderboard.app.presentation.common.PresentationObserver
 import javax.inject.Inject
@@ -9,7 +9,7 @@ import javax.inject.Inject
 /**
  * Created by semanticer on 17.06.2017.
  */
-class BoardPresenter @Inject constructor(private val useCase: GetLeaderboardUseCase) : MvpNullObjectBasePresenter<BoardView>() {
+class BoardPresenter @Inject constructor(private val useCase: GetScoresUseCase) : MvpNullObjectBasePresenter<BoardView>() {
     override fun attachView(view: BoardView) {
         super.attachView(view)
         reloadList()
@@ -26,6 +26,6 @@ class BoardPresenter @Inject constructor(private val useCase: GetLeaderboardUseC
     }
 
     fun reloadList() {
-        useCase.execute(PostListObserver(view), GetLeaderboardUseCase.Params("-KmqHMQRcRtC1AGEllAC"))
+        useCase.execute(PostListObserver(view), GetScoresUseCase.Params("-KmqHMQRcRtC1AGEllAC"))
     }
 }

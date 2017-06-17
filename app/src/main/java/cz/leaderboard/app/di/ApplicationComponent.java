@@ -3,6 +3,7 @@ package cz.leaderboard.app.di;
 import cz.leaderboard.app.App;
 import cz.leaderboard.app.presentation.board.BoardModule;
 import cz.leaderboard.app.di.conductorlib.ConductorInjectionModule;
+import cz.leaderboard.app.presentation.board.IntroModule;
 import dagger.Component;
 import dagger.android.AndroidInjector;
 import dagger.android.support.AndroidSupportInjectionModule;
@@ -17,7 +18,8 @@ import dagger.android.support.AndroidSupportInjectionModule;
                 AndroidBindingModule.class,
                 AndroidSupportInjectionModule.class,
                 ConductorInjectionModule.class,
-                BoardModule.class
+                BoardModule.class,
+                IntroModule.class
         }
 )
 @ApplicationScope

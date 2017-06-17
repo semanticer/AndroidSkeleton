@@ -8,6 +8,7 @@ import com.bluelinelabs.conductor.Router
 import com.bluelinelabs.conductor.RouterTransaction
 import cz.leaderboard.app.R
 import cz.leaderboard.app.presentation.board.BoardController
+import cz.leaderboard.app.presentation.board.IntroController
 import cz.leaderboard.app.presentation.common.ActionBarProvider
 import dagger.android.AndroidInjection
 
@@ -22,11 +23,11 @@ open class MainActivity : AppCompatActivity(), ActionBarProvider {
         AndroidInjection.inject(this)
 
         setContentView(R.layout.activity_main)
-        controllerContainer = findViewById(R.id.controller_container)
+        controllerContainer = findViewById(R.id.controller_container) as ViewGroup
 
         router = Conductor.attachRouter(this, controllerContainer, savedInstanceState)
         if (!router.hasRootController()) {
-            router.setRoot(RouterTransaction.with(BoardController()))
+            router.setRoot(RouterTransaction.with(IntroController()))
         }
     }
 

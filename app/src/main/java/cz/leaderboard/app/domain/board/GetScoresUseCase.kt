@@ -12,10 +12,10 @@ import javax.inject.Inject
  * Created by semanticer on 17.06.2017.
  */
 
-class GetLeaderboardUseCase @Inject constructor(val leaderboardRepository: LeaderboardRepository,
-                                                threadExecutor: ThreadExecutor,
-                                                postExecutionThread: PostExecutionThread)
-    : UseCase<List<LeaderboardRecord>, GetLeaderboardUseCase.Params>(threadExecutor, postExecutionThread) {
+class GetScoresUseCase @Inject constructor(val leaderboardRepository: LeaderboardRepository,
+                                           threadExecutor: ThreadExecutor,
+                                           postExecutionThread: PostExecutionThread)
+    : UseCase<List<LeaderboardRecord>, GetScoresUseCase.Params>(threadExecutor, postExecutionThread) {
 
     override fun buildUseCaseObservable(params: Params): Flowable<List<LeaderboardRecord>> {
         return leaderboardRepository.getUsers(params.boardId).map { users ->
