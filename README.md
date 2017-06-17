@@ -1,3 +1,3 @@
-Unnamed Leaderboard project for HackPrague 2017
+Leaderboard project for HackPrague 2017
 ========
 

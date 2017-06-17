@@ -25,7 +25,7 @@ class RecordAdapter : RecyclerView.Adapter<RecordAdapter.RecordViewHolder>() {
 
     override fun onBindViewHolder(holder: RecordViewHolder, position: Int) {
         val post = recordList[position]
-        holder.bind(position, post)
+        holder.bind(position+1, post)
     }
 
     override fun getItemCount(): Int {
@@ -51,7 +51,7 @@ class RecordAdapter : RecyclerView.Adapter<RecordAdapter.RecordViewHolder>() {
         fun bind(pos: Int, record: LeaderboardRecord) {
             order.text = pos.toString()
             username.text = record.user.name
-            score.text = record.value.toString() + " " + record.unit
+            score.text = record.user.score.toString() + " " + record.unit
         }
     }
 }

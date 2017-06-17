@@ -18,7 +18,9 @@ class GetLeaderboardUseCase @Inject constructor(val leaderboardRepository: Leade
     : UseCase<List<LeaderboardRecord>, GetLeaderboardUseCase.Params>(threadExecutor, postExecutionThread) {
 
     override fun buildUseCaseObservable(params: Params): Flowable<List<LeaderboardRecord>> {
-        return leaderboardRepository.getLeaderboard(params.boardId)
+        return leaderboardRepository.getUsers(params.boardId).map { users ->
+            users.map { LeaderboardRecord(it, "Piv")}.reversed()
+        }
     }
 
 

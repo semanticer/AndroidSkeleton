@@ -26,6 +26,6 @@ class BoardPresenter @Inject constructor(private val useCase: GetLeaderboardUseC
     }
 
     fun reloadList() {
-        useCase.execute(PostListObserver(view), GetLeaderboardUseCase.Params("asdsad"))
+        useCase.execute(PostListObserver(view), GetLeaderboardUseCase.Params("-KmqHMQRcRtC1AGEllAC"))
     }
 }

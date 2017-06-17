@@ -5,5 +5,5 @@ package cz.leaderboard.app.data.model
  */
 data class User (
     @JvmField var name: String = "",
-    @JvmField var records: List<Record> = listOf()
+    @JvmField var score: Int = 0
 )
