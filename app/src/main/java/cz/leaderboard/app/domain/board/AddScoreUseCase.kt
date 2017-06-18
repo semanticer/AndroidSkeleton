@@ -21,7 +21,7 @@ class AddScoreUseCase @Inject constructor(val leaderboardRepository: Leaderboard
         if (userId == null || boardId == null) {
             return Flowable.error<Int> { Throwable("No user currently logged in or board selected") }
         } else {
-            return Flowable.just(leaderboardRepository.addScore(params.score, userId, boardId))
+            return Flowable.just(leaderboardRepository.addScore(params.score, userId, boardId)).firstElement().toFlowable()
         }
     }
 

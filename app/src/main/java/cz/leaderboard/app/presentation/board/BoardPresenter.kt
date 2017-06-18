@@ -53,7 +53,7 @@ class BoardPresenter @Inject constructor(
 
     class AddScoreObserver constructor(view: BoardView): PresentationObserver<Int, BoardView>(view) {
         override fun onNext(addedScore: Int) {
-            onView { it.showAddScore(addedScore) }
+            onView { /*it.showAddScore(addedScore)*/ }
         }
 
         override fun onError(e: Throwable?) {

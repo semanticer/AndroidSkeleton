@@ -24,6 +24,7 @@ class AddUserUseCase @Inject constructor(val leaderboardRepository: LeaderboardR
             return leaderboardRepository.addUser(params.username, boardId)
                     .doOnNext { newUserId -> leaderboardRepository.setCurrentUser(newUserId)}
                     .flatMap { newUserId -> leaderboardRepository.getUser(newUserId, boardId) }
+                    .firstElement().toFlowable()
 
         }
     }
