@@ -45,8 +45,14 @@ class GetScoresUseCase @Inject constructor(val leaderboardRepository: Leaderboar
     }
 
     private fun getCurrentUserRecord(userId: String?, records: List<LeaderboardRecord>): LeaderboardRecord? {
+        var myOrder = -1
+        for ((order, rec) in records.withIndex()){
+            if (rec.user.id == userId) {
+                myOrder = order + 1
+            }
+        }
         if (userId != null) {
-            return records.find { it.user.id == userId }
+            return records.find { it.user.id == userId }!!.copy(order = myOrder)
         } else return null
     }
 

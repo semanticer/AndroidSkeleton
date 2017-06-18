@@ -3,6 +3,7 @@ package cz.leaderboard.app.presentation.board
 import android.support.design.widget.FloatingActionButton
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.VISIBLE
@@ -36,9 +37,9 @@ class BoardController : BaseController<BoardView, BoardPresenter>(), BoardView {
     internal val usernameInputLayout: ViewGroup by bindView(R.id.username_input_layout)
 
     internal val currentUserLayout: ViewGroup by bindView(R.id.current_user_layout)
-    internal val username: TextView by bindView(R.id.username)
-    internal val order: TextView by bindView(R.id.order)
-    internal val score: TextView by bindView(R.id.score)
+    internal val username: TextView by bindView(R.id.my_username)
+    internal val order: TextView by bindView(R.id.my_order)
+    internal val score: TextView by bindView(R.id.my_score)
 
     @Inject lateinit var boardPresenter: BoardPresenter
 
@@ -73,6 +74,7 @@ class BoardController : BaseController<BoardView, BoardPresenter>(), BoardView {
     }
 
     override fun showLogin() {
+        Log.i("test", "showLogin")
         usernameInputLayout.visibility = VISIBLE
         currentUserLayout.visibility = VISIBLE
         showBottomBarIfHidden()
@@ -86,11 +88,12 @@ class BoardController : BaseController<BoardView, BoardPresenter>(), BoardView {
     }
 
     override fun showUser(leaderboardRecord: LeaderboardRecord) {
+        Log.i("test", "showUser")
         usernameInputLayout.visibility = GONE
         currentUserLayout.visibility = VISIBLE
         showBottomBarIfHidden()
-        username.setText(leaderboardRecord.user.name)
-        order.setText("69")
+        username.setText(leaderboardRecord.user.name + "")
+        order.text = "${leaderboardRecord.order}"
         score.text = "${leaderboardRecord.user.score} ${leaderboardRecord.board.units}"
     }
 

@@ -8,5 +8,6 @@ import cz.leaderboard.app.data.model.User
  */
 data class LeaderboardRecord(
     val user: User,
-    val board: Board
+    val board: Board,
+    val order: Int = -1
 )
