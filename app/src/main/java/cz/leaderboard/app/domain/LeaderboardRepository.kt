@@ -21,4 +21,5 @@ interface LeaderboardRepository {
     fun setCurrentBoard(board: String)
     fun setCurrentUser(userId: String)
     fun addUser(username: String, boardId: String): Flowable<String>
+    fun getTopBoards(): Flowable<List<Board>>
 }

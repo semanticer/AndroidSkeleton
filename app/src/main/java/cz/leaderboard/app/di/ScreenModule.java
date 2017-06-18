@@ -12,6 +12,7 @@ import cz.leaderboard.app.domain.board.AddBoardUseCase;
 import cz.leaderboard.app.domain.board.AddScoreUseCase;
 import cz.leaderboard.app.domain.board.AddUserUseCase;
 import cz.leaderboard.app.domain.board.GetScoresUseCase;
+import cz.leaderboard.app.domain.board.GetTopBoardsUseCase;
 import cz.leaderboard.app.presentation.board.BoardPresenter;
 import cz.leaderboard.app.presentation.intro.IntroPresenter;
 import dagger.Module;
@@ -40,8 +41,14 @@ public class ScreenModule {
 
     @Provides
     @ScreenScope
-    static IntroPresenter provideIntroPresenter(AddBoardUseCase addBoardUseCase){
-        return new IntroPresenter(addBoardUseCase);
+    static IntroPresenter provideIntroPresenter(AddBoardUseCase addBoardUseCase, GetTopBoardsUseCase getTopBoardsUseCase){
+        return new IntroPresenter(addBoardUseCase, getTopBoardsUseCase);
+    }
+
+    @Provides
+    @ScreenScope
+    static GetTopBoardsUseCase provideGetTopBoardsUseCase(LeaderboardRepository leaderboardRepository){
+        return new GetTopBoardsUseCase(leaderboardRepository, Schedulers::newThread, AndroidSchedulers::mainThread);
     }
 
     @Provides

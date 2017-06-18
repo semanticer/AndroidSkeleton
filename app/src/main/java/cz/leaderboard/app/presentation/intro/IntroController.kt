@@ -19,6 +19,8 @@ import android.net.Uri
 import android.text.InputType
 import android.widget.EditText
 import com.bluelinelabs.conductor.RouterTransaction
+import cz.leaderboard.app.data.model.Board
+import cz.leaderboard.app.presentation.intro.BoardAdapter
 
 
 /**
@@ -33,6 +35,8 @@ class IntroController : BaseController<IntroView, IntroPresenter>(), IntroView {
 
 
     @Inject lateinit var introPresenter: IntroPresenter
+
+    val boardAdapter = BoardAdapter()
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
@@ -53,6 +57,11 @@ class IntroController : BaseController<IntroView, IntroPresenter>(), IntroView {
                 .subscribe({introPresenter.onSearchClicked(it)})
 
         RxView.clicks(startNewBtn).subscribe({ introPresenter.onCreateNewClicked()})
+
+        boardList.setHasFixedSize(false)
+        boardList.layoutManager = LinearLayoutManager(activity)
+        boardList.adapter = boardAdapter
+        boardAdapter.listener = { introPresenter.onSearchClicked(it.public_code)}
     }
 
     override fun showCreateNew() {
@@ -70,7 +79,7 @@ class IntroController : BaseController<IntroView, IntroPresenter>(), IntroView {
         showError("Sorry, We didn't found this board")
     }
 
-    override fun showTopBoards() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun showTopBoards(boards: List<Board>) {
+        boardAdapter.updateData(boards)
     }
 }

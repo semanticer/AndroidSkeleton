@@ -64,6 +64,13 @@ class FirebaseLeaderboardRepository(val dbStorage: FirebaseDatabase, val sharedP
         return Flowable.just(newUserKey)
     }
 
+    override fun getTopBoards(): Flowable<List<Board>> {
+//        val query = dbStorage.reference.child("boards").orderByChild("is_discoverable").equalTo(true)
+        val query = dbStorage.getReference("boards")
+        return RxFirebaseDatabase.observeValueEvent(query, DataSnapshotMapper.listOf(Board::class.java))
+
+    }
+
     override fun getBoard(boardId: String): Flowable<Board> {
         val query = dbStorage.getReference("boards/$boardId")
         return RxFirebaseDatabase.observeValueEvent(query, Board::class.java)

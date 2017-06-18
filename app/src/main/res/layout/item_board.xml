@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:background="?selectableItemBackground"
+    android:padding="@dimen/grid_2">
+
+    <TextView
+        android:id="@+id/title"
+        android:textSize="21dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Pamatky"
+        />
+
+    <TextView
+        android:id="@+id/description"
+        android:textSize="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Nejake povidani o pamatkach"
+        />
+
+</LinearLayout>

@@ -1,5 +1,6 @@
 package cz.leaderboard.app.presentation.board
 
+import cz.leaderboard.app.data.model.Board
 import cz.leaderboard.app.domain.board.LeaderboardRecord
 import cz.leaderboard.app.presentation.common.BaseView
 
@@ -10,5 +11,5 @@ interface IntroView : BaseView {
     fun showCreateNew()
     fun showFoundBoard()
     fun showSearchError()
-    fun showTopBoards()
+    fun showTopBoards(boards: List<Board>)
 }
