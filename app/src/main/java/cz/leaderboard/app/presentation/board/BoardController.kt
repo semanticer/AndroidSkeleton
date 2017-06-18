@@ -1,5 +1,7 @@
 package cz.leaderboard.app.presentation.board
 
+import android.app.Activity.RESULT_CANCELED
+import android.app.Activity.RESULT_OK
 import android.support.design.widget.FloatingActionButton
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -24,6 +26,8 @@ import com.jakewharton.rxbinding2.widget.RxTextView
 import cz.leaderboard.app.data.model.User
 import cz.leaderboard.app.presentation.common.setRandomDrawable
 import de.hdodenhof.circleimageview.CircleImageView
+import android.content.Intent
+import android.net.Uri
 
 
 /**
@@ -111,6 +115,34 @@ class BoardController : BaseController<BoardView, BoardPresenter>(), BoardView {
                     .setDuration(600).start()
 
         }
+    }
+
+    override fun showQrReader() {
+        try {
+            val intent = Intent("com.google.zxing.client.android.SCAN")
+            intent.putExtra("SCAN_MODE", "QR_CODE_MODE") // "PRODUCT_MODE for bar codes
+            startActivityForResult(intent, 0)
+        } catch (e: Exception) {
+
+            val marketUri = Uri.parse("market://details?id=com.google.zxing.client.android")
+            val marketIntent = Intent(Intent.ACTION_VIEW, marketUri)
+            startActivity(marketIntent)
+
+        }
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (resultCode == RESULT_OK && data != null) {
+            val contents = data.getStringExtra("SCAN_RESULT")
+            boardPresenter.onQrScanned(contents)
+        }
+        if(resultCode == RESULT_CANCELED){
+            //handle cancel
+        }
+
     }
 
 }

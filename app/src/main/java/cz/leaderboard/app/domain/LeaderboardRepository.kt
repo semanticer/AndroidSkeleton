@@ -1,6 +1,7 @@
 package cz.leaderboard.app.domain
 
 import cz.leaderboard.app.data.model.Board
+import cz.leaderboard.app.data.model.Checkpoint
 import cz.leaderboard.app.data.model.User
 import cz.leaderboard.app.domain.board.LeaderboardRecord
 import io.reactivex.Flowable
@@ -22,4 +23,5 @@ interface LeaderboardRepository {
     fun setCurrentUser(userId: String)
     fun addUser(username: String, boardId: String): Flowable<String>
     fun getTopBoards(): Flowable<List<Board>>
+    fun getCheckpoint(currentBoard: String): Flowable<List<Checkpoint>>
 }

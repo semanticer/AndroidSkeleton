@@ -5,6 +5,5 @@ package cz.leaderboard.app.data.model
  */
 data class Checkpoint (
     @JvmField var code: String = "",
-    @JvmField var name: String = "",
-    @JvmField var value: Int = 0
+    @JvmField var score: Int = 0
 )

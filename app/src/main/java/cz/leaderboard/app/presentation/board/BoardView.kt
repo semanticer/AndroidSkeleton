@@ -12,4 +12,6 @@ interface BoardView : BaseView {
     fun showAddScore(addedScore: Int)
     fun showLogin()
     fun showUser(user: LeaderboardRecord)
+    fun showQrReader()
+    
 }

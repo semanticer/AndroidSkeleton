@@ -14,6 +14,7 @@ import io.reactivex.Observable
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.ValueEventListener
+import cz.leaderboard.app.data.model.Checkpoint
 import io.reactivex.Maybe
 
 
@@ -38,6 +39,12 @@ class FirebaseLeaderboardRepository(val dbStorage: FirebaseDatabase, val sharedP
         return RxFirebaseDatabase.observeValueEvent(query, User::class.java)
     }
 
+    override fun getCheckpoint(boardId: String): Flowable<List<Checkpoint>> {
+        val query = dbStorage.getReference("boards/$boardId/checkpoints")
+        return RxFirebaseDatabase.observeValueEvent(query, DataSnapshotMapper.listOf(Checkpoint::class.java))
+    }
+
+
     override fun addScore(score: Int, userId: String, boardId: String): Int {
 //        val userRecordsRef = dbStorage.getReference("boards/$boardId/records/$userId")
 //        userRecordsRef.setValue(Record(true, score, System.currentTimeMillis()))
@@ -46,7 +53,7 @@ class FirebaseLeaderboardRepository(val dbStorage: FirebaseDatabase, val sharedP
         val newRecordId = dbStorage.getReference("boards/$boardId/records/$userId").push().key
         val recordMap = mapOf(
                 Pair("is_approved", true),
-                Pair("score", 1)
+                Pair("score", score)
         )
         val childUpdates = mapOf(Pair<String, Any>("boards/$boardId/records/$userId/$newRecordId", recordMap ) )
         dbStorage.reference.updateChildren(childUpdates)

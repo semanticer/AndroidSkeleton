@@ -1,11 +1,9 @@
 package cz.leaderboard.app.presentation.board
 
 import com.hannesdorfmann.mosby3.mvp.MvpNullObjectBasePresenter
+import cz.leaderboard.app.data.model.Checkpoint
 import cz.leaderboard.app.data.model.User
-import cz.leaderboard.app.domain.board.AddScoreUseCase
-import cz.leaderboard.app.domain.board.AddUserUseCase
-import cz.leaderboard.app.domain.board.GetScoresUseCase
-import cz.leaderboard.app.domain.board.LeaderboardRecord
+import cz.leaderboard.app.domain.board.*
 import cz.leaderboard.app.presentation.common.PresentationObserver
 import javax.inject.Inject
 
@@ -15,8 +13,12 @@ import javax.inject.Inject
 class BoardPresenter @Inject constructor(
         private val getScoresUseCase: GetScoresUseCase,
         private val addScoresUseCase: AddScoreUseCase,
-        private val addUserUseCase: AddUserUseCase
+        private val addUserUseCase: AddUserUseCase,
+        private val getCheckpointsUseCase: GetCheckpointsUseCase
     ) : MvpNullObjectBasePresenter<BoardView>() {
+
+    private var currentCheckpoits: List<Checkpoint> = listOf()
+
 
     override fun attachView(view: BoardView) {
         super.attachView(view)
@@ -27,6 +29,7 @@ class BoardPresenter @Inject constructor(
         getScoresUseCase.dispose()
         addScoresUseCase.dispose()
         addUserUseCase.dispose()
+        getCheckpointsUseCase.dispose()
     }
 
     fun reloadList() {
@@ -34,12 +37,30 @@ class BoardPresenter @Inject constructor(
     }
 
     fun onAddClicked() {
-        addScoresUseCase.execute(AddScoreObserver(view), AddScoreUseCase.Params(1))
+        getCheckpointsUseCase.execute(CheckpointObserver(view), GetCheckpointsUseCase.Params())
     }
 
     fun onUserAdded(username: String) {
         addUserUseCase.execute(AddUserObserver(view), AddUserUseCase.Params(username))
     }
+
+
+
+    inner class CheckpointObserver constructor(view: BoardView): PresentationObserver<List<Checkpoint>, BoardView>(view) {
+        override fun onNext(checkpoits: List<Checkpoint>) {
+            currentCheckpoits = checkpoits
+            if (checkpoits.isNotEmpty()) {
+                view.showQrReader()
+            } else {
+                addScoresUseCase.execute(AddScoreObserver(view), AddScoreUseCase.Params(1))
+            }
+        }
+
+        override fun onError(e: Throwable?) {
+            onView { it.showLogin() }
+        }
+    }
+
 
     class ScoresObserver constructor(view: BoardView): PresentationObserver<Pair<LeaderboardRecord?, List<LeaderboardRecord>>, BoardView>(view) {
         override fun onNext(scores: Pair<LeaderboardRecord?, List<LeaderboardRecord>>) {
@@ -61,13 +82,20 @@ class BoardPresenter @Inject constructor(
         }
     }
 
-    class AddUserObserver constructor(view: BoardView): PresentationObserver<User, BoardView>(view) {
+    inner class AddUserObserver constructor(view: BoardView): PresentationObserver<User, BoardView>(view) {
         override fun onNext(user: User) {
-            onView { }
+            onView { onAddClicked() }
         }
     }
 
-
+    fun onQrScanned(contents: String?) {
+        if (contents != null) {
+            val chosenCheckpointOrNull = currentCheckpoits.filter { it.code == contents }.firstOrNull()
+            if (chosenCheckpointOrNull != null) {
+                addScoresUseCase.execute(AddScoreObserver(view), AddScoreUseCase.Params(chosenCheckpointOrNull.score))
+            }
+        }
+    }
 
 
 }

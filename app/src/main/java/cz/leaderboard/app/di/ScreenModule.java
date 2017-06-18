@@ -11,6 +11,7 @@ import cz.leaderboard.app.domain.LeaderboardRepository;
 import cz.leaderboard.app.domain.board.AddBoardUseCase;
 import cz.leaderboard.app.domain.board.AddScoreUseCase;
 import cz.leaderboard.app.domain.board.AddUserUseCase;
+import cz.leaderboard.app.domain.board.GetCheckpointsUseCase;
 import cz.leaderboard.app.domain.board.GetScoresUseCase;
 import cz.leaderboard.app.domain.board.GetTopBoardsUseCase;
 import cz.leaderboard.app.presentation.board.BoardPresenter;
@@ -35,8 +36,8 @@ public class ScreenModule {
 
     @Provides
     @ScreenScope
-    static BoardPresenter providePostListPresenter(GetScoresUseCase getScoresUseCase, AddScoreUseCase addScoreUseCase, AddUserUseCase addUserUseCase){
-        return new BoardPresenter(getScoresUseCase, addScoreUseCase, addUserUseCase);
+    static BoardPresenter providePostListPresenter(GetScoresUseCase getScoresUseCase, AddScoreUseCase addScoreUseCase, AddUserUseCase addUserUseCase, GetCheckpointsUseCase getCheckpointsUseCase){
+        return new BoardPresenter(getScoresUseCase, addScoreUseCase, addUserUseCase, getCheckpointsUseCase);
     }
 
     @Provides
@@ -49,6 +50,12 @@ public class ScreenModule {
     @ScreenScope
     static GetTopBoardsUseCase provideGetTopBoardsUseCase(LeaderboardRepository leaderboardRepository){
         return new GetTopBoardsUseCase(leaderboardRepository, Schedulers::newThread, AndroidSchedulers::mainThread);
+    }
+
+    @Provides
+    @ScreenScope
+    static GetCheckpointsUseCase provideGetCheckpointsUseCase(LeaderboardRepository leaderboardRepository){
+        return new GetCheckpointsUseCase(leaderboardRepository, Schedulers::newThread, AndroidSchedulers::mainThread);
     }
 
     @Provides
