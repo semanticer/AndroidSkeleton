@@ -10,6 +10,7 @@ import cz.leaderboard.app.data.repository.FirebaseLeaderboardRepository;
 import cz.leaderboard.app.domain.LeaderboardRepository;
 import cz.leaderboard.app.domain.board.AddBoardUseCase;
 import cz.leaderboard.app.domain.board.AddScoreUseCase;
+import cz.leaderboard.app.domain.board.AddUserUseCase;
 import cz.leaderboard.app.domain.board.GetScoresUseCase;
 import cz.leaderboard.app.presentation.board.BoardPresenter;
 import cz.leaderboard.app.presentation.intro.IntroPresenter;
@@ -33,8 +34,8 @@ public class ScreenModule {
 
     @Provides
     @ScreenScope
-    static BoardPresenter providePostListPresenter(GetScoresUseCase getScoresUseCase, AddScoreUseCase addScoreUseCase){
-        return new BoardPresenter(getScoresUseCase, addScoreUseCase);
+    static BoardPresenter providePostListPresenter(GetScoresUseCase getScoresUseCase, AddScoreUseCase addScoreUseCase, AddUserUseCase addUserUseCase){
+        return new BoardPresenter(getScoresUseCase, addScoreUseCase, addUserUseCase);
     }
 
     @Provides
@@ -48,6 +49,13 @@ public class ScreenModule {
     static GetScoresUseCase provideGetLeaderboardUseCase(LeaderboardRepository leaderboardRepository){
         return new GetScoresUseCase(leaderboardRepository, Schedulers::newThread, AndroidSchedulers::mainThread);
     }
+
+    @Provides
+    @ScreenScope
+    static AddUserUseCase provideAddUserUseCase(LeaderboardRepository leaderboardRepository){
+        return new AddUserUseCase(leaderboardRepository, Schedulers::newThread, AndroidSchedulers::mainThread);
+    }
+
 
     @Provides
     @ScreenScope

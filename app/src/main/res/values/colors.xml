@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">@color/fetch_me_some</color>
+    <color name="colorPrimaryDark">@color/feind</color>
+    <color name="colorAccent">@color/green_blue</color>
+    <color name="background">#e7e9e3</color>
+
+
+    <color name="feind">#594F4F</color>
+    <color name="rock_my_world">#547980</color>
+    <color name="green_blue">#45ADA8</color>
+    <color name="fetch_me_some">#9DE0AD</color>
+    <color name="pancakes">#E5FCC2</color>
 </resources>

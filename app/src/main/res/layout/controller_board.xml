@@ -1,24 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/background">
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/add_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
-        app:fabSize="normal"
-        android:clickable="true"
-        android:src="@drawable/ic_add_black_24dp"
-        android:layout_margin="@dimen/grid_2"
-        android:scaleType="center"/>
+
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/record_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/add_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:fabSize="normal"
+        app:layout_anchor="@+id/bottom_bar"
+        app:layout_anchorGravity="top|right|end"
+        android:clickable="true"
+        android:src="@drawable/ic_add_black_24dp"
+        android:layout_margin="@dimen/grid_2"
+        app:elevation="16dp"
+        android:scaleType="center"/>
 
-</FrameLayout>
+    <android.support.v7.widget.CardView
+        android:id="@+id/bottom_bar"
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
+        app:elevation="12dp"
+        android:layout_height="80dp"
+        android:visibility="invisible"
+        >
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/username_input_layout"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/grid_2"
+            android:layout_marginRight="@dimen/grid_2"
+            android:visibility="gone"
+            >
+
+            <EditText
+                android:id="@+id/username_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="username"
+                android:inputType="text|textNoSuggestions|textCapWords"
+                android:imeOptions="actionDone"
+                android:maxLines="1" />
+        </android.support.design.widget.TextInputLayout>
+
+        <FrameLayout
+            android:id="@+id/current_user_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical|bottom"
+            android:layout_marginLeft="@dimen/grid_2"
+            android:layout_marginRight="@dimen/grid_2">
+            <include layout="@layout/item_record" />
+        </FrameLayout>
+
+    </android.support.v7.widget.CardView>
+</android.support.design.widget.CoordinatorLayout>

@@ -51,7 +51,7 @@ class RecordAdapter : RecyclerView.Adapter<RecordAdapter.RecordViewHolder>() {
         fun bind(pos: Int, record: LeaderboardRecord) {
             order.text = pos.toString()
             username.text = record.user.name
-            score.text = record.user.score.toString() + " " + record.unit
+            score.text = record.user.score.toString() + " " + record.board.units
         }
     }
 }

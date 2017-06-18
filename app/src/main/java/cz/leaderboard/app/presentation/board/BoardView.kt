@@ -1,5 +1,6 @@
 package cz.leaderboard.app.presentation.board
 
+import cz.leaderboard.app.data.model.User
 import cz.leaderboard.app.domain.board.LeaderboardRecord
 import cz.leaderboard.app.presentation.common.BaseView
 
@@ -9,4 +10,6 @@ import cz.leaderboard.app.presentation.common.BaseView
 interface BoardView : BaseView {
     fun showRecordData(recordList: List<LeaderboardRecord>)
     fun showAddScore(addedScore: Int)
+    fun showLogin()
+    fun showUser(user: LeaderboardRecord)
 }

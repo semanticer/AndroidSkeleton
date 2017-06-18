@@ -1,6 +1,6 @@
 package cz.leaderboard.app.domain.board
 
-import cz.leaderboard.app.data.model.Record
+import cz.leaderboard.app.data.model.Board
 import cz.leaderboard.app.data.model.User
 
 /**
@@ -8,5 +8,5 @@ import cz.leaderboard.app.data.model.User
  */
 data class LeaderboardRecord(
     val user: User,
-    val unit: String
+    val board: Board
 )

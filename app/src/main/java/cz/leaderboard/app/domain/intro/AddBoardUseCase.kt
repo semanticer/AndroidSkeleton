@@ -17,7 +17,7 @@ class AddBoardUseCase @Inject constructor(val leaderboardRepository: Leaderboard
     : UseCase<Board, AddBoardUseCase.Params>(threadExecutor, postExecutionThread) {
 
     override fun buildUseCaseObservable(params: Params): Flowable<Board> {
-        return leaderboardRepository.getBoard(params.publicCode)
+        return leaderboardRepository.findBoard(params.publicCode)
                 .doOnNext({ board -> leaderboardRepository.setCurrentBoard(board.id) })
     }
 

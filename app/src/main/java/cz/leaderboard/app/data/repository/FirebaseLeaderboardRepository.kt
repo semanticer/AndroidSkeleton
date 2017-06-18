@@ -22,7 +22,6 @@ import io.reactivex.Maybe
  */
 class FirebaseLeaderboardRepository(val dbStorage: FirebaseDatabase, val sharedPrefStorage: SharedPreferences) : LeaderboardRepository {
 
-
     private val PREF_BOARD_ID: String = "PREF_BOARD_ID"
     private val PREF_USER_ID: String = "PREF_USER_ID"
 
@@ -30,16 +29,47 @@ class FirebaseLeaderboardRepository(val dbStorage: FirebaseDatabase, val sharedP
         val query = dbStorage.getReference("boards/$boardId")
                 .child("users")
                 .orderByChild("score")
-        return RxFirebaseDatabase.observeValueEvent(query, DataSnapshotMapper.listOf(User::class.java))
+        return RxFirebaseDatabase.observeValueEvent(query)
+                .map { dataSnapshotList -> dataSnapshotList.children.map { it.getValue(User::class.java)!!.copy(id = it.key) } }
+    }
+
+    override fun getUser(userId: String, boardId: String): Flowable<User> {
+        val query = dbStorage.getReference("boards/$boardId/users/$userId")
+        return RxFirebaseDatabase.observeValueEvent(query, User::class.java)
     }
 
     override fun addScore(score: Int, userId: String, boardId: String): Int {
-        val userRecordsRef = dbStorage.getReference("boards/$boardId/records/$userId")
-        userRecordsRef.setValue(Record(true, score, System.currentTimeMillis()))
-        return score
+//        val userRecordsRef = dbStorage.getReference("boards/$boardId/records/$userId")
+//        userRecordsRef.setValue(Record(true, score, System.currentTimeMillis()))
+//        return score
+
+        val newRecordId = dbStorage.getReference("boards/$boardId/records/$userId").push().key
+        val recordMap = mapOf(
+                Pair("is_approved", true),
+                Pair("score", 1)
+        )
+        val childUpdates = mapOf(Pair<String, Any>("boards/$boardId/records/$userId/$newRecordId", recordMap ) )
+        dbStorage.reference.updateChildren(childUpdates)
+        return 1
     }
 
-    override fun getBoard(publicCode: String): Flowable<Board> {
+    override fun addUser(username: String, boardId: String): Flowable<String> {
+        val newUserKey = dbStorage.getReference("boards/$boardId").child("users").push().key
+        val userMap = mapOf(
+                Pair("name", username),
+                Pair("score", 0)
+        )
+        val childUpdates = mapOf(Pair<String, Any>("boards/$boardId/users/$newUserKey", userMap ) )
+        dbStorage.reference.updateChildren(childUpdates)
+        return Flowable.just(newUserKey)
+    }
+
+    override fun getBoard(boardId: String): Flowable<Board> {
+        val query = dbStorage.getReference("boards/$boardId")
+        return RxFirebaseDatabase.observeValueEvent(query, Board::class.java)
+    }
+
+    override fun findBoard(publicCode: String): Flowable<Board> {
         val query = dbStorage.reference.child("boards").orderByChild("public_code").equalTo(publicCode)
 
         return RxFirebaseDatabase.observeValueEvent(query)
