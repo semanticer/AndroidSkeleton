@@ -22,6 +22,8 @@ import android.widget.EditText
 import android.widget.TextView
 import com.jakewharton.rxbinding2.widget.RxTextView
 import cz.leaderboard.app.data.model.User
+import cz.leaderboard.app.presentation.common.setRandomDrawable
+import de.hdodenhof.circleimageview.CircleImageView
 
 
 /**
@@ -40,6 +42,7 @@ class BoardController : BaseController<BoardView, BoardPresenter>(), BoardView {
     internal val username: TextView by bindView(R.id.my_username)
     internal val order: TextView by bindView(R.id.my_order)
     internal val score: TextView by bindView(R.id.my_score)
+    internal val avatar: CircleImageView by bindView(R.id.my_avatar)
 
     @Inject lateinit var boardPresenter: BoardPresenter
 
@@ -93,8 +96,9 @@ class BoardController : BaseController<BoardView, BoardPresenter>(), BoardView {
         currentUserLayout.visibility = VISIBLE
         showBottomBarIfHidden()
         username.setText(leaderboardRecord.user.name + "")
-        order.text = "${leaderboardRecord.order}"
+        order.text = "#${leaderboardRecord.order}"
         score.text = "${leaderboardRecord.user.score} ${leaderboardRecord.board.units}"
+        avatar.setRandomDrawable(leaderboardRecord.user)
     }
 
     private fun showBottomBarIfHidden() {

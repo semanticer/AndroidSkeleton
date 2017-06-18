@@ -11,17 +11,17 @@
 
     <LinearLayout
         android:layout_width="0dp"
-        android:layout_weight="1"
-        android:orientation="vertical"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/grid_3">
+        android:layout_marginTop="@dimen/grid_2"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
         <de.hdodenhof.circleimageview.CircleImageView
-            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/second_avatar"
+            style="@style/TopAvatar"
             android:src="@drawable/ic_add_black_24dp"
-            app:civ_border_width="2dp"
             app:civ_border_color="#FF000000"
-            style="@style/TopAvatar" />
+            app:civ_border_width="2dp" />
 
         <TextView
             android:id="@+id/second_name"
@@ -35,18 +35,19 @@
             android:id="@+id/second_score"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/grid_0.5"
             android:gravity="center_horizontal"
             android:textStyle="bold"
-            android:layout_marginBottom="@dimen/grid_0.5"
             tools:text="93" />
 
         <FrameLayout
-            android:background="@color/feind"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="match_parent"
+            android:background="@color/feind">
+
             <TextView
-                android:text="2"
-                style="@style/TopOrderNumber" />
+                style="@style/TopOrderNumber"
+                android:text="2" />
         </FrameLayout>
     </LinearLayout>
 
@@ -96,7 +97,7 @@
         android:layout_weight="1"
         android:orientation="vertical"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/grid_3">
+        android:layout_marginTop="@dimen/grid_4">
         <de.hdodenhof.circleimageview.CircleImageView
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/third_avatar"

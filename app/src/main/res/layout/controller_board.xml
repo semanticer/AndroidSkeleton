@@ -62,43 +62,47 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            android:layout_gravity="center_vertical|bottom"
-            android:layout_marginLeft="@dimen/grid_2"
-            android:layout_marginRight="@dimen/grid_2">
+            android:gravity="center_vertical"
+            android:layout_marginLeft="@dimen/grid_3"
+            android:layout_marginRight="@dimen/grid_3">
 
 
             <TextView
                 android:id="@+id/my_order"
-                android:layout_width="wrap_content"
+                android:layout_width="50dp"
                 android:layout_height="wrap_content"
-                android:textSize="26dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginRight="@dimen/grid_3"
+                android:textSize="18dp"
+                android:layout_marginRight="@dimen/grid_1"
                 tools:text="#1"
                 />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/my_avatar"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:layout_marginRight="@dimen/grid_2"
+                android:src="@drawable/ic_add_black_24dp"
+                app:civ_border_color="#FF000000"
+                app:civ_border_width="2dp" />
 
             <TextView
                 android:id="@+id/my_username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:textSize="19dp"
+                android:textSize="21dp"
                 android:layout_weight="1"
                 android:layout_marginRight="@dimen/grid_2"
                 tools:text="Pepino"
                 />
 
-
             <TextView
                 android:id="@+id/my_score"
-                android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="21dp"
                 tools:text="67 Piv"
                 />
 
-            <!--<include layout="@layout/item_record" />-->
 
         </LinearLayout>
 
