@@ -4,7 +4,9 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
+import com.bumptech.glide.Glide
 import cz.leaderboard.app.R
 import cz.leaderboard.app.data.model.Board
 import cz.leaderboard.app.presentation.common.ViewBinder
@@ -49,6 +51,7 @@ class BoardAdapter : RecyclerView.Adapter<BoardAdapter.BoardViewHolder>() {
 
         internal val title: TextView by bindView(R.id.title)
         internal val description: TextView by bindView(R.id.description)
+        internal val image: ImageView by bindView(R.id.image)
 
         init {
             ViewBinder.setup(this, itemView)
@@ -57,6 +60,7 @@ class BoardAdapter : RecyclerView.Adapter<BoardAdapter.BoardViewHolder>() {
         fun bind(board: Board) {
             title.text = board.title
             description.text = board.description
+            Glide.with(description.context).load(board.img).into(image)
         }
     }
 }

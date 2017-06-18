@@ -7,6 +7,7 @@ data class Board(
         @JvmField var id: String = "",
         @JvmField var title: String = "",
         @JvmField var description: String = "",
+        @JvmField var img: String = "",
 //        @JvmField var admin_approve_required: Boolean = false,
 //        @JvmField var admin_code: String = "",
 //        @JvmField var checkpoints: Map<String, Checkpoint> = mapOf(),

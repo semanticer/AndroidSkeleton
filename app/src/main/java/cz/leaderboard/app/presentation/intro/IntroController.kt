@@ -16,7 +16,9 @@ import cz.leaderboard.app.presentation.intro.IntroPresenter
 import javax.inject.Inject
 import android.content.Intent
 import android.net.Uri
+import android.support.v7.widget.GridLayoutManager
 import android.text.InputType
+import android.view.WindowManager
 import android.widget.EditText
 import com.bluelinelabs.conductor.RouterTransaction
 import cz.leaderboard.app.data.model.Board
@@ -59,13 +61,15 @@ class IntroController : BaseController<IntroView, IntroPresenter>(), IntroView {
         RxView.clicks(startNewBtn).subscribe({ introPresenter.onCreateNewClicked()})
 
         boardList.setHasFixedSize(false)
-        boardList.layoutManager = LinearLayoutManager(activity)
+        boardList.layoutManager = GridLayoutManager(activity, 1)
         boardList.adapter = boardAdapter
         boardAdapter.listener = { introPresenter.onSearchClicked(it.public_code)}
+
+
     }
 
     override fun showCreateNew() {
-        val url = "http://www.google.com"
+        val url = "http://kapoard.com/"
         val i = Intent(Intent.ACTION_VIEW)
         i.data = Uri.parse(url)
         startActivity(i)

@@ -22,4 +22,10 @@
         <item name="android:layout_gravity">center_horizontal</item>
     </style>
 
+
+    <style name="AppTheme.Button.Main" parent="Widget.AppCompat.Button.Colored">
+        <item name="colorButtonNormal">@color/feind</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
 </resources>
