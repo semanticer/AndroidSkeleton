@@ -18,10 +18,10 @@ class AddScoreUseCase @Inject constructor(val leaderboardRepository: Leaderboard
     override fun buildUseCaseObservable(params: Params): Flowable<Int> {
         val userId = leaderboardRepository.getCurrentUserId()
         val boardId = leaderboardRepository.getCurrentBoard()
-        if (userId == null || boardId == null) {
+        if (userId.isNullOrBlank() || boardId.isNullOrBlank()) {
             return Flowable.error<Int> { Throwable("No user currently logged in or board selected") }
         } else {
-            return Flowable.just(leaderboardRepository.addScore(params.score, userId, boardId)).firstElement().toFlowable()
+            return Flowable.just(leaderboardRepository.addScore(params.score, userId!!, boardId!!)).firstElement().toFlowable()
         }
     }
 

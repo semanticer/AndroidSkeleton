@@ -22,11 +22,11 @@ class GetScoresUseCase @Inject constructor(val leaderboardRepository: Leaderboar
 
     override fun buildUseCaseObservable(params: Params): Flowable<Pair<LeaderboardRecord?, List<LeaderboardRecord>>> {
         val boardId = leaderboardRepository.getCurrentBoard()
-        if (boardId == null) {
+        if (boardId.isNullOrBlank()) {
             return Flowable.error { Throwable("No board selected") }
         } else {
-            val boardObs = leaderboardRepository.getBoard(boardId)
-            val usersObs = leaderboardRepository.getUsers(boardId)
+            val boardObs = leaderboardRepository.getBoard(boardId!!)
+            val usersObs = leaderboardRepository.getUsers(boardId!!)
             return Flowable.combineLatest<Board, List<User>, List<LeaderboardRecord> >(
                     boardObs,
                     usersObs,

@@ -36,26 +36,36 @@ open class MainActivity : AppCompatActivity(), ActionBarProvider {
 
         router = Conductor.attachRouter(this, controllerContainer, savedInstanceState)
         if (!router.hasRootController()) {
-            if (leaderboardRepository.getCurrentBoard() != null) {
+            if (!leaderboardRepository.getCurrentBoard().isNullOrBlank()) {
                 router.setRoot(RouterTransaction.with(BoardController()))
             } else {
-                router.setRoot(RouterTransaction.with(IntroController()))
+                showIntro()
             }
         }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.getItemId()) {
+        val itemId = item.itemId
+        val homeId = android.R.id.home
+        when (itemId) {
         // Respond to the action bar's Up/Home button
-            android.R.id.home -> {
-                router.popToRoot()
+            homeId -> {
+                showIntro()
                 return true
             }
         }
         return super.onOptionsItemSelected(item)
     }
 
+    private fun showIntro() {
+        router.setRoot(RouterTransaction.with(IntroController()))
+        leaderboardRepository.setCurrentBoard(null)
+        leaderboardRepository.setCurrentUser(null)
+    }
+
+
     override fun onBackPressed() {
+        showIntro()
         if (!router.handleBack()) {
             super.onBackPressed()
         }

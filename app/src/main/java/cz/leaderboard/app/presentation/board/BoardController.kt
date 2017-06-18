@@ -58,6 +58,7 @@ class BoardController : BaseController<BoardView, BoardPresenter>(), BoardView {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
         ConductorInjection.inject(this)
+        setHasOptionsMenu(true)
         return super.onCreateView(inflater, container)
     }
 
@@ -69,7 +70,6 @@ class BoardController : BaseController<BoardView, BoardPresenter>(), BoardView {
 
     override fun onViewBind(view: View) {
         (activity as AppCompatActivity).setSupportActionBar(toolbar)
-        (activity as AppCompatActivity).supportActionBar?.title = ""
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         (activity as AppCompatActivity).supportActionBar?.setDefaultDisplayHomeAsUpEnabled(true)
 
@@ -79,15 +79,17 @@ class BoardController : BaseController<BoardView, BoardPresenter>(), BoardView {
         RxView.clicks(addBtn).subscribe({boardPresenter.onAddClicked()})
         bottomBar.translationY = 100f
 
+        setHasOptionsMenu(true)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return super.onOptionsItemSelected(item)
+        return activity?.onOptionsItemSelected(item)!!
     }
 
     override fun showRecordData(recordList: List<LeaderboardRecord>) {
         if (recordList.isNotEmpty()) {
             (activity as AppCompatActivity).supportActionBar?.title = recordList.first().board.title
+            toolbar.title  = recordList.first().board.title
         }
         recordAdapter.updateData(recordList)
     }

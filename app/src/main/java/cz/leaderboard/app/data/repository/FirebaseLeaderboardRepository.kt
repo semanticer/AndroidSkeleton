@@ -99,11 +99,11 @@ class FirebaseLeaderboardRepository(val dbStorage: FirebaseDatabase, val sharedP
         return sharedPrefStorage.getString(PREF_USER_ID, null)
     }
 
-    override fun setCurrentBoard(boardId: String) {
+    override fun setCurrentBoard(boardId: String?) {
         sharedPrefStorage.edit().putString(PREF_BOARD_ID, boardId).apply()
     }
 
-    override fun setCurrentUser(userId: String) {
+    override fun setCurrentUser(userId: String?) {
         sharedPrefStorage.edit().putString(PREF_USER_ID, userId).apply()
     }
 

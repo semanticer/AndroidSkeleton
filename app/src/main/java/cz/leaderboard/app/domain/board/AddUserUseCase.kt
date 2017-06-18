@@ -18,10 +18,10 @@ class AddUserUseCase @Inject constructor(val leaderboardRepository: LeaderboardR
 
     override fun buildUseCaseObservable(params: Params): Flowable<User> {
         val boardId = leaderboardRepository.getCurrentBoard()
-        if (boardId == null) {
+        if (boardId.isNullOrBlank()) {
             return Flowable.error<User> { Throwable("No board selected") }
         } else {
-            return leaderboardRepository.addUser(params.username, boardId)
+            return leaderboardRepository.addUser(params.username, boardId!!)
                     .doOnNext { newUserId -> leaderboardRepository.setCurrentUser(newUserId)}
                     .flatMap { newUserId -> leaderboardRepository.getUser(newUserId, boardId) }
                     .firstElement().toFlowable()

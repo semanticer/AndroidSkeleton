@@ -25,10 +25,10 @@ android {
             storeFile file('../keystore/debug.keystore')
         }
         release {
-            keyAlias 'androiddebugkey'
-            keyPassword 'android'
-            storePassword 'android'
-            storeFile file('../keystore/release.keystore')
+            keyAlias 'kapoard'
+            keyPassword ''
+            storePassword ''
+            storeFile file('../keystore/kapoard.keystore')
         }
     }
 
@@ -36,7 +36,7 @@ android {
 
         prod {
             signingConfig signingConfigs.release
-            versionCode gitVersionCode
+            versionCode 1
             versionName gitVersionName
 
             buildConfigField "String", "BASE_API_URL", "\"https://jsonplaceholder.typicode.com/\""

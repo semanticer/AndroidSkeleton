@@ -19,8 +19,8 @@ interface LeaderboardRepository {
 
     fun getCurrentBoard(): String?
     fun getCurrentUserId(): String?
-    fun setCurrentBoard(board: String)
-    fun setCurrentUser(userId: String)
+    fun setCurrentBoard(board: String?)
+    fun setCurrentUser(userId: String?)
     fun addUser(username: String, boardId: String): Flowable<String>
     fun getTopBoards(): Flowable<List<Board>>
     fun getCheckpoint(currentBoard: String): Flowable<List<Checkpoint>>

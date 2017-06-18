@@ -22,6 +22,7 @@ import android.view.WindowManager
 import android.widget.EditText
 import android.widget.Toolbar
 import com.bluelinelabs.conductor.RouterTransaction
+import com.bluelinelabs.conductor.changehandler.FadeChangeHandler
 import cz.leaderboard.app.data.model.Board
 import cz.leaderboard.app.presentation.intro.BoardAdapter
 
@@ -78,7 +79,9 @@ class IntroController : BaseController<IntroView, IntroPresenter>(), IntroView {
     }
 
     override fun showFoundBoard() {
-        router.pushController(RouterTransaction.with(BoardController()))
+        router.pushController(RouterTransaction.with(BoardController())
+                .pushChangeHandler(FadeChangeHandler())
+                .popChangeHandler(FadeChangeHandler()))
     }
 
     override fun showSearchError() {
