@@ -28,11 +28,6 @@ class IntroPresenter @Inject constructor(val addBoardUseCase: AddBoardUseCase, v
         addBoardUseCase.execute(AddBoardObserver(view), AddBoardUseCase.Params(searchText) )
     }
 
-
-    fun onCreateNewClicked() {
-        view.showCreateNew()
-    }
-
     class AddBoardObserver constructor(view: IntroView): PresentationObserver<Board, IntroView>(view) {
         override fun onNext(boards: Board) {
             onView { it.showFoundBoard() }

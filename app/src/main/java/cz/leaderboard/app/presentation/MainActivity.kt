@@ -14,6 +14,9 @@ import cz.leaderboard.app.presentation.board.IntroController
 import cz.leaderboard.app.presentation.common.ActionBarProvider
 import dagger.android.AndroidInjection
 import javax.inject.Inject
+import android.support.v4.app.NavUtils
+import android.view.MenuItem
+
 
 open class MainActivity : AppCompatActivity(), ActionBarProvider {
 
@@ -39,6 +42,17 @@ open class MainActivity : AppCompatActivity(), ActionBarProvider {
                 router.setRoot(RouterTransaction.with(IntroController()))
             }
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.getItemId()) {
+        // Respond to the action bar's Up/Home button
+            android.R.id.home -> {
+                router.popToRoot()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onBackPressed() {

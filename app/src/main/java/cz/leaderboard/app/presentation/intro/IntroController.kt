@@ -20,6 +20,7 @@ import android.support.v7.widget.GridLayoutManager
 import android.text.InputType
 import android.view.WindowManager
 import android.widget.EditText
+import android.widget.Toolbar
 import com.bluelinelabs.conductor.RouterTransaction
 import cz.leaderboard.app.data.model.Board
 import cz.leaderboard.app.presentation.intro.BoardAdapter
@@ -53,12 +54,13 @@ class IntroController : BaseController<IntroView, IntroPresenter>(), IntroView {
     override fun createPresenter(): IntroPresenter = introPresenter
 
     override fun onViewBind(view: View) {
+
         searchEdit.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS or InputType.TYPE_NUMBER_VARIATION_PASSWORD
         RxView.clicks(searchBtn)
                 .map{ _ -> searchEdit.text.toString() }
                 .subscribe({introPresenter.onSearchClicked(it)})
 
-        RxView.clicks(startNewBtn).subscribe({ introPresenter.onCreateNewClicked()})
+        RxView.clicks(startNewBtn).subscribe({ showCreateNew()})
 
         boardList.setHasFixedSize(false)
         boardList.layoutManager = GridLayoutManager(activity, 1)

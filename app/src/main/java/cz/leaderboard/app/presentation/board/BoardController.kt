@@ -28,6 +28,9 @@ import cz.leaderboard.app.presentation.common.setRandomDrawable
 import de.hdodenhof.circleimageview.CircleImageView
 import android.content.Intent
 import android.net.Uri
+import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.Toolbar
+import android.view.MenuItem
 
 
 /**
@@ -47,6 +50,7 @@ class BoardController : BaseController<BoardView, BoardPresenter>(), BoardView {
     internal val order: TextView by bindView(R.id.my_order)
     internal val score: TextView by bindView(R.id.my_score)
     internal val avatar: CircleImageView by bindView(R.id.my_avatar)
+    internal val toolbar: Toolbar by bindView(R.id.toolbar)
 
     @Inject lateinit var boardPresenter: BoardPresenter
 
@@ -64,6 +68,11 @@ class BoardController : BaseController<BoardView, BoardPresenter>(), BoardView {
     override fun createPresenter(): BoardPresenter = boardPresenter
 
     override fun onViewBind(view: View) {
+        (activity as AppCompatActivity).setSupportActionBar(toolbar)
+        (activity as AppCompatActivity).supportActionBar?.title = ""
+        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        (activity as AppCompatActivity).supportActionBar?.setDefaultDisplayHomeAsUpEnabled(true)
+
         listView.setHasFixedSize(false)
         listView.layoutManager = LinearLayoutManager(activity)
         listView.adapter = recordAdapter
@@ -72,7 +81,14 @@ class BoardController : BaseController<BoardView, BoardPresenter>(), BoardView {
 
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return super.onOptionsItemSelected(item)
+    }
+
     override fun showRecordData(recordList: List<LeaderboardRecord>) {
+        if (recordList.isNotEmpty()) {
+            (activity as AppCompatActivity).supportActionBar?.title = recordList.first().board.title
+        }
         recordAdapter.updateData(recordList)
     }
 
@@ -81,7 +97,6 @@ class BoardController : BaseController<BoardView, BoardPresenter>(), BoardView {
     }
 
     override fun showLogin() {
-        Log.i("test", "showLogin")
         usernameInputLayout.visibility = VISIBLE
         currentUserLayout.visibility = VISIBLE
         showBottomBarIfHidden()
