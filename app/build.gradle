@@ -149,11 +149,13 @@ dependencies {
     compile "com.jakewharton.rxbinding2:rxbinding-appcompat-v7:$rxBinding"
 
 
-    debugCompile "com.squareup.leakcanary:leakcanary-android:$leakCanary"
+//    debugCompile "com.squareup.leakcanary:leakcanary-android:$leakCanary"
+    debugCompile "com.squareup.leakcanary:leakcanary-android-no-op:$leakCanary"
     releaseCompile "com.squareup.leakcanary:leakcanary-android-no-op:$leakCanary"
     testCompile "com.squareup.leakcanary:leakcanary-android-no-op:$leakCanary"
 
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    compile 'de.hdodenhof:circleimageview:2.1.0'
 
     // testing
 

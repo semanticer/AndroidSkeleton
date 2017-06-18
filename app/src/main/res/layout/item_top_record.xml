@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:paddingLeft="@dimen/grid_2"
+    android:paddingRight="@dimen/grid_2"
+    android:layout_marginBottom="@dimen/grid_2"
+    android:layout_height="190dp">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/grid_3">
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/second_avatar"
+            android:src="@drawable/ic_add_black_24dp"
+            app:civ_border_width="2dp"
+            app:civ_border_color="#FF000000"
+            style="@style/TopAvatar" />
+
+        <TextView
+            android:id="@+id/second_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/grid_1"
+            android:gravity="center_horizontal"
+            tools:text="Tomas" />
+
+        <TextView
+            android:id="@+id/second_score"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:textStyle="bold"
+            android:layout_marginBottom="@dimen/grid_0.5"
+            tools:text="93" />
+
+        <FrameLayout
+            android:background="@color/feind"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+            <TextView
+                android:text="2"
+                style="@style/TopOrderNumber" />
+        </FrameLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/first_avatar"
+            style="@style/TopAvatar"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/ic_add_black_24dp"
+            app:civ_border_color="#FF000000"
+            app:civ_border_width="2dp" />
+
+        <TextView
+            android:id="@+id/first_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            tools:text="Tomas" />
+
+        <TextView
+            android:id="@+id/first_score"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/grid_0.5"
+            android:gravity="center_horizontal"
+            android:textStyle="bold"
+            tools:text="120" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/feind">
+
+            <TextView
+                style="@style/TopOrderNumber"
+                android:text="1" />
+        </FrameLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/grid_3">
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/third_avatar"
+            style="@style/TopAvatar"
+            android:src="@drawable/ic_add_black_24dp"
+            app:civ_border_width="2dp"
+            android:layout_gravity="center_horizontal"
+            app:civ_border_color="#FF000000"/>
+
+        <TextView
+            android:id="@+id/third_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            tools:text="Tomas"/>
+
+        <TextView
+            android:id="@+id/third_score"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:textStyle="bold"
+            android:layout_marginBottom="@dimen/grid_0.5"
+            tools:text="13" />
+
+        <FrameLayout
+            android:background="@color/feind"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+            <TextView
+                android:text="3"
+                style="@style/TopOrderNumber" />
+        </FrameLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

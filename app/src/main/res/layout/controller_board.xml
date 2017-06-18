@@ -10,6 +10,8 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/record_list"
+        android:paddingTop="@dimen/grid_3"
+        android:clipToPadding="false"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
@@ -71,7 +73,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="26dp"
                 android:layout_gravity="center_vertical"
-                android:layout_marginRight="@dimen/grid_2"
+                android:layout_marginRight="@dimen/grid_3"
                 tools:text="#1"
                 />
 
