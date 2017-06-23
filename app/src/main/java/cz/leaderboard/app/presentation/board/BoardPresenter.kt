@@ -72,8 +72,8 @@ class BoardPresenter @Inject constructor(
         }
     }
 
-    class AddScoreObserver constructor(view: BoardView): PresentationObserver<Int, BoardView>(view) {
-        override fun onNext(addedScore: Int) {
+    class AddScoreObserver constructor(view: BoardView): PresentationObserver<String, BoardView>(view) {
+        override fun onNext(addedScore: String) {
             onView { /*it.showAddScore(addedScore)*/ }
         }
 
@@ -92,7 +92,7 @@ class BoardPresenter @Inject constructor(
         if (contents != null) {
             val chosenCheckpointOrNull = currentCheckpoits.filter { it.code == contents }.firstOrNull()
             if (chosenCheckpointOrNull != null) {
-                addScoresUseCase.execute(AddScoreObserver(view), AddScoreUseCase.Params(boardId, chosenCheckpointOrNull.score))
+                addScoresUseCase.execute(AddScoreObserver(view), AddScoreUseCase.Params(boardId, chosenCheckpointOrNull.score, chosenCheckpointOrNull.id))
             }
         }
     }

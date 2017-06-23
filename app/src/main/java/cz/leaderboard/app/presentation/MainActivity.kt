@@ -16,7 +16,6 @@ import javax.inject.Inject
 import android.util.Log
 import android.view.MenuItem
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 
 open class MainActivity : AppCompatActivity(), ActionBarProvider {
 
@@ -29,7 +28,7 @@ open class MainActivity : AppCompatActivity(), ActionBarProvider {
 
     @Inject lateinit var leaderboardRepository: LeaderboardRepository
 
-    val auth = FirebaseAuth.getInstance()
+    val auth = FirebaseAuth.getInstance()!!
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,7 +54,6 @@ open class MainActivity : AppCompatActivity(), ActionBarProvider {
                     if (task.isSuccessful) {
                         // Sign in success, update UI with the signed-in user's information
                         Log.d(TAG, "signInAnonymously:success")
-                        val user: FirebaseUser? = auth.getCurrentUser()
                     } else {
                         // If sign in fails, display a message to the user.
                         Log.w(TAG, "signInAnonymously:failure", task.exception)

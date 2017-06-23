@@ -35,23 +35,22 @@ class FirebaseLeaderboardRepository(val dbStorage: FirebaseDatabase) : Leaderboa
 
     override fun getCheckpoint(boardId: String): Flowable<List<Checkpoint>> {
         val query = dbStorage.getReference("boards/$boardId/checkpoints")
-        return RxFirebaseDatabase.observeValueEvent(query, DataSnapshotMapper.listOf(Checkpoint::class.java))
+        return RxFirebaseDatabase.observeValueEvent(query)
+                .map { dataSnapshotList -> dataSnapshotList.children.map { it.getValue(Checkpoint::class.java)!!.copy(id = it.key) } }
     }
 
 
-    override fun addScore(score: Int, userId: String, boardId: String): Int {
-//        val userRecordsRef = dbStorage.getReference("boards/$boardId/records/$userId")
-//        userRecordsRef.setValue(Record(true, score, System.currentTimeMillis()))
-//        return score
-
-        val newRecordId = dbStorage.getReference("boards/$boardId/records/$userId").push().key
-        val recordMap = mapOf(
-                Pair("is_approved", true),
-                Pair("score", score)
+    override fun addScore(score: Int, userId: String, board: Board, checkpointId: String?): String {
+        val newRecordId = dbStorage.getReference("boards/${board.id}/records/$userId").push().key
+        val recordMap = mutableMapOf(
+                Pair("is_approved", !board.admin_approve_required),
+                Pair("score", score),
+                Pair("timestamp", System.currentTimeMillis())
         )
-        val childUpdates = mapOf(Pair<String, Any>("boards/$boardId/records/$userId/$newRecordId", recordMap ) )
+        checkpointId?.let { recordMap["checkpoint_id"] = it }
+        val childUpdates = mapOf(Pair<String, Any>("boards/${board.id}/records/$userId/$newRecordId", recordMap ) )
         dbStorage.reference.updateChildren(childUpdates)
-        return 1
+        return newRecordId
     }
 
     override fun addUser(userId: String, username: String, boardId: String): Flowable<String> {
@@ -73,7 +72,8 @@ class FirebaseLeaderboardRepository(val dbStorage: FirebaseDatabase) : Leaderboa
 
     override fun getBoard(boardId: String): Flowable<Board> {
         val query = dbStorage.getReference("boards/$boardId")
-        return RxFirebaseDatabase.observeValueEvent(query, Board::class.java)
+        return RxFirebaseDatabase.observeValueEvent(query)
+                .map { dataSnapshot ->  dataSnapshot.getValue(Board::class.java)!!.copy(id = dataSnapshot.key) }
     }
 
     override fun findBoard(publicCode: String): Flowable<Board> {

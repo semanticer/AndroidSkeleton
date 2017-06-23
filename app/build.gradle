@@ -219,6 +219,14 @@ configurations.compile.dependencies.each { compileDependency ->
     }
 }
 
+//configurations.compile.resolutionStrategy {
+//    eachDependency { DependencyResolveDetails details ->
+//        if (details.requested.group == 'com.google.firebase' ||
+//                details.requested.group == 'com.google.android.gms') {
+//            details.useVersion "$firebase"
+//        }
+//    }
+//}
 
 
 apply plugin: 'com.google.gms.google-services'

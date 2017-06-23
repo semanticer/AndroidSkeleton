@@ -14,7 +14,7 @@ interface LeaderboardRepository {
     fun getUsers(boardId: String): Flowable<List<User>>
     fun getUser(userId: String, boardId: String): Flowable<User>
     fun userExists(userId: String, boardId: String): Flowable<Boolean>
-    fun addScore(score: Int, userId: String, boardId: String): Int
+    fun addScore(score: Int, userId: String, board: Board, checkpointId: String? = null): String
     fun getBoard(boardId: String): Flowable<Board>
     fun findBoard(publicCode: String): Flowable<Board>
 
