@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.f2prateek.rx.preferences2.RxSharedPreferences;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 import javax.inject.Named;
 import cz.leaderboard.app.data.repository.FirebaseLeaderboardRepository;
@@ -60,14 +61,14 @@ public class ScreenModule {
 
     @Provides
     @ScreenScope
-    static GetScoresUseCase provideGetLeaderboardUseCase(LeaderboardRepository leaderboardRepository){
-        return new GetScoresUseCase(leaderboardRepository, Schedulers::newThread, AndroidSchedulers::mainThread);
+    static GetScoresUseCase provideGetLeaderboardUseCase(FirebaseUser firebaseUser, LeaderboardRepository leaderboardRepository){
+        return new GetScoresUseCase(firebaseUser, leaderboardRepository, Schedulers::newThread, AndroidSchedulers::mainThread);
     }
 
     @Provides
     @ScreenScope
-    static AddUserUseCase provideAddUserUseCase(LeaderboardRepository leaderboardRepository){
-        return new AddUserUseCase(leaderboardRepository, Schedulers::newThread, AndroidSchedulers::mainThread);
+    static AddUserUseCase provideAddUserUseCase(FirebaseUser firebaseUser, LeaderboardRepository leaderboardRepository){
+        return new AddUserUseCase(firebaseUser, leaderboardRepository, Schedulers::newThread, AndroidSchedulers::mainThread);
     }
 
 
@@ -79,8 +80,8 @@ public class ScreenModule {
 
     @Provides
     @ScreenScope
-    static AddScoreUseCase provideAddScoreUseCase(LeaderboardRepository leaderboardRepository){
-        return new AddScoreUseCase(leaderboardRepository, Schedulers::newThread, AndroidSchedulers::mainThread);
+    static AddScoreUseCase provideAddScoreUseCase(FirebaseUser user, LeaderboardRepository leaderboardRepository){
+        return new AddScoreUseCase(user, leaderboardRepository, Schedulers::newThread, AndroidSchedulers::mainThread);
     }
 
     @Provides

@@ -107,6 +107,8 @@ dependencies {
 
     compile "com.google.firebase:firebase-core:$firebase"
     compile "com.google.firebase:firebase-database:$firebase"
+    compile "com.google.firebase:firebase-auth:$firebase"
+//    compile 'com.firebaseui:firebase-ui-auth:2.0.1'
 
     // RxJava
     compile "io.reactivex.rxjava2:rxandroid:$rxJava"

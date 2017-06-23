@@ -9,22 +9,27 @@ import com.bluelinelabs.conductor.RouterTransaction
 import cz.leaderboard.app.R
 import cz.leaderboard.app.domain.LeaderboardRepository
 import cz.leaderboard.app.presentation.board.BoardController
-import cz.leaderboard.app.presentation.board.BoardPresenter
 import cz.leaderboard.app.presentation.board.IntroController
 import cz.leaderboard.app.presentation.common.ActionBarProvider
 import dagger.android.AndroidInjection
 import javax.inject.Inject
-import android.support.v4.app.NavUtils
+import android.util.Log
 import android.view.MenuItem
-
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 
 open class MainActivity : AppCompatActivity(), ActionBarProvider {
+
+    private val RC_SIGN_IN = 123
+    private val TAG = "MainActivity"
 
     private lateinit var router: Router
 
     private lateinit var controllerContainer: ViewGroup
 
     @Inject lateinit var leaderboardRepository: LeaderboardRepository
+
+    val auth = FirebaseAuth.getInstance()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,12 +41,28 @@ open class MainActivity : AppCompatActivity(), ActionBarProvider {
 
         router = Conductor.attachRouter(this, controllerContainer, savedInstanceState)
         if (!router.hasRootController()) {
-            if (!leaderboardRepository.getCurrentBoard().isNullOrBlank()) {
-                router.setRoot(RouterTransaction.with(BoardController()))
-            } else {
-                showIntro()
+            if (auth.currentUser == null) {
+                signInAnon()
             }
+            showIntro()
         }
+    }
+
+    private fun signInAnon() {
+        auth.signInAnonymously()
+                .addOnCompleteListener(this, { task ->
+                    Log.d(TAG, "signInAnonymously:done")
+                    if (task.isSuccessful) {
+                        // Sign in success, update UI with the signed-in user's information
+                        Log.d(TAG, "signInAnonymously:success")
+                        val user: FirebaseUser? = auth.getCurrentUser()
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        Log.w(TAG, "signInAnonymously:failure", task.exception)
+
+                    }
+
+                })
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -59,15 +80,14 @@ open class MainActivity : AppCompatActivity(), ActionBarProvider {
 
     private fun showIntro() {
         router.setRoot(RouterTransaction.with(IntroController()))
-        leaderboardRepository.setCurrentBoard(null)
-        leaderboardRepository.setCurrentUser(null)
     }
 
 
     override fun onBackPressed() {
-        showIntro()
-        if (!router.handleBack()) {
+        if (router.backstack.isEmpty()) {
             super.onBackPressed()
+        } else {
+            showIntro()
         }
     }
 }

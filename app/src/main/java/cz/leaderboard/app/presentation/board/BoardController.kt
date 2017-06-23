@@ -17,17 +17,15 @@ import cz.leaderboard.app.domain.board.LeaderboardRecord
 import cz.leaderboard.app.presentation.common.BaseController
 import cz.leaderboard.app.presentation.common.bindView
 import javax.inject.Inject
-import android.view.inputmethod.EditorInfo
-import android.view.KeyEvent.KEYCODE_ENTER
 import android.view.View.GONE
 import android.widget.EditText
 import android.widget.TextView
 import com.jakewharton.rxbinding2.widget.RxTextView
-import cz.leaderboard.app.data.model.User
 import cz.leaderboard.app.presentation.common.setRandomDrawable
 import de.hdodenhof.circleimageview.CircleImageView
 import android.content.Intent
 import android.net.Uri
+import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.MenuItem
@@ -36,7 +34,8 @@ import android.view.MenuItem
 /**
  * Created by semanticer on 17.06.2017.
  */
-class BoardController : BaseController<BoardView, BoardPresenter>(), BoardView {
+class BoardController(args: Bundle) : BaseController<BoardView, BoardPresenter>(args), BoardView {
+
 
     internal val listView: RecyclerView by bindView(R.id.record_list)
     internal val addBtn: FloatingActionButton by bindView(R.id.add_btn)
@@ -59,6 +58,7 @@ class BoardController : BaseController<BoardView, BoardPresenter>(), BoardView {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
         ConductorInjection.inject(this)
         setHasOptionsMenu(true)
+        boardPresenter.boardId = args.getString(ARG_BOARD_ID)
         return super.onCreateView(inflater, container)
     }
 
@@ -112,7 +112,6 @@ class BoardController : BaseController<BoardView, BoardPresenter>(), BoardView {
     }
 
     override fun showUser(leaderboardRecord: LeaderboardRecord) {
-        Log.i("test", "showUser")
         usernameInputLayout.visibility = GONE
         currentUserLayout.visibility = VISIBLE
         showBottomBarIfHidden()
@@ -161,5 +160,16 @@ class BoardController : BaseController<BoardView, BoardPresenter>(), BoardView {
         }
 
     }
+
+    companion object  {
+        val ARG_BOARD_ID = "arg_board_id"
+        fun newInstance(boardId: String): BoardController {
+            val args = Bundle()
+            args.putString(ARG_BOARD_ID, boardId)
+            return BoardController(args)
+        }
+    }
+
+
 
 }

@@ -16,14 +16,16 @@ public fun CircleImageView.setRandomDrawable(user: User) {
 }
 
 fun getRandomDrawable(context: Context, randomSeed: Int): Drawable {
-    val l = listOf<Int>(
-            R.drawable.first,
-            R.drawable.third,
-            R.drawable.fourth,
-            R.drawable.fift,
-            R.drawable.sixyh,
-            R.drawable.seventh
-            )
-    return context.resources.getDrawable(l[randomSeed % 6])
+    return context.resources.getDrawable(R.drawable.ic_add_black_24dp)
+//
+//    val l = listOf<Int>(
+//            R.drawable.first,
+//            R.drawable.third,
+//            R.drawable.fourth,
+//            R.drawable.fift,
+//            R.drawable.sixyh,
+//            R.drawable.seventh
+//            )
+//    return context.resources.getDrawable(l[randomSeed % 6])
 }
 

@@ -9,7 +9,7 @@ import cz.leaderboard.app.presentation.common.BaseView
  */
 interface IntroView : BaseView {
     fun showCreateNew()
-    fun showFoundBoard()
+    fun showFoundBoard(board: Board)
     fun showSearchError()
     fun showTopBoards(boards: List<Board>)
 }

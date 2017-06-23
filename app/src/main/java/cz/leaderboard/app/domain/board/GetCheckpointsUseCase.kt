@@ -11,22 +11,17 @@ import javax.inject.Inject
 /**
  * Created by semanticer on 18.06.2017.
  */
-class GetCheckpointsUseCase @Inject constructor(val leaderboardRepository: LeaderboardRepository,
+class GetCheckpointsUseCase @Inject constructor(
+                                                val leaderboardRepository: LeaderboardRepository,
                                                 threadExecutor: ThreadExecutor,
                                                 postExecutionThread: PostExecutionThread)
     : UseCase<List<Checkpoint>, GetCheckpointsUseCase.Params>(threadExecutor, postExecutionThread) {
 
     override fun buildUseCaseObservable(params: GetCheckpointsUseCase.Params): Flowable<List<Checkpoint>> {
-        val currentBoard = leaderboardRepository.getCurrentBoard()
-        val currentUser = leaderboardRepository.getCurrentUserId()
-        if (currentBoard.isNullOrBlank() || currentUser.isNullOrBlank()) {
-            return Flowable.error<List<Checkpoint>> { Throwable("No board selected or user logged in") }
-        } else {
-            return leaderboardRepository.getCheckpoint(currentBoard!!)
-        }
+        return leaderboardRepository.getCheckpoint(params.boardId)
     }
 
-    class Params
+    class Params(val boardId: String)
 
 
 }

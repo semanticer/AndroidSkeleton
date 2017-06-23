@@ -18,7 +18,7 @@ class BoardPresenter @Inject constructor(
     ) : MvpNullObjectBasePresenter<BoardView>() {
 
     private var currentCheckpoits: List<Checkpoint> = listOf()
-
+    lateinit var boardId: String
 
     override fun attachView(view: BoardView) {
         super.attachView(view)
@@ -33,15 +33,15 @@ class BoardPresenter @Inject constructor(
     }
 
     fun reloadList() {
-        getScoresUseCase.execute(ScoresObserver(view), GetScoresUseCase.Params())
+        getScoresUseCase.execute(ScoresObserver(view), GetScoresUseCase.Params(boardId))
     }
 
     fun onAddClicked() {
-        getCheckpointsUseCase.execute(CheckpointObserver(view), GetCheckpointsUseCase.Params())
+        getCheckpointsUseCase.execute(CheckpointObserver(view), GetCheckpointsUseCase.Params(boardId))
     }
 
     fun onUserAdded(username: String) {
-        addUserUseCase.execute(AddUserObserver(view), AddUserUseCase.Params(username))
+        addUserUseCase.execute(AddUserObserver(view), AddUserUseCase.Params(boardId, username))
     }
 
 
@@ -52,7 +52,7 @@ class BoardPresenter @Inject constructor(
             if (checkpoits.isNotEmpty()) {
                 view.showQrReader()
             } else {
-                addScoresUseCase.execute(AddScoreObserver(view), AddScoreUseCase.Params(1))
+                addScoresUseCase.execute(AddScoreObserver(view), AddScoreUseCase.Params(boardId, 1))
             }
         }
 
@@ -92,10 +92,8 @@ class BoardPresenter @Inject constructor(
         if (contents != null) {
             val chosenCheckpointOrNull = currentCheckpoits.filter { it.code == contents }.firstOrNull()
             if (chosenCheckpointOrNull != null) {
-                addScoresUseCase.execute(AddScoreObserver(view), AddScoreUseCase.Params(chosenCheckpointOrNull.score))
+                addScoresUseCase.execute(AddScoreObserver(view), AddScoreUseCase.Params(boardId, chosenCheckpointOrNull.score))
             }
         }
     }
-
-
 }

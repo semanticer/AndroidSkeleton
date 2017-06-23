@@ -18,7 +18,6 @@ class AddBoardUseCase @Inject constructor(val leaderboardRepository: Leaderboard
 
     override fun buildUseCaseObservable(params: Params): Flowable<Board> {
         return leaderboardRepository.findBoard(params.publicCode)
-                .doOnNext({ board -> leaderboardRepository.setCurrentBoard(board.id) })
     }
 
     data class Params(val publicCode: String)

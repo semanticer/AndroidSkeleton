@@ -1,6 +1,5 @@
 package cz.leaderboard.app.presentation.board
 
-import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +8,6 @@ import android.widget.Button
 import com.jakewharton.rxbinding2.view.RxView
 import cz.leaderboard.app.R
 import cz.leaderboard.app.di.conductorlib.ConductorInjection
-import cz.leaderboard.app.domain.board.LeaderboardRecord
 import cz.leaderboard.app.presentation.common.BaseController
 import cz.leaderboard.app.presentation.common.bindView
 import cz.leaderboard.app.presentation.intro.IntroPresenter
@@ -18,9 +16,7 @@ import android.content.Intent
 import android.net.Uri
 import android.support.v7.widget.GridLayoutManager
 import android.text.InputType
-import android.view.WindowManager
 import android.widget.EditText
-import android.widget.Toolbar
 import com.bluelinelabs.conductor.RouterTransaction
 import com.bluelinelabs.conductor.changehandler.FadeChangeHandler
 import cz.leaderboard.app.data.model.Board
@@ -78,8 +74,8 @@ class IntroController : BaseController<IntroView, IntroPresenter>(), IntroView {
         startActivity(i)
     }
 
-    override fun showFoundBoard() {
-        router.pushController(RouterTransaction.with(BoardController())
+    override fun showFoundBoard(board: Board) {
+        router.pushController(RouterTransaction.with(BoardController.newInstance(board.id))
                 .pushChangeHandler(FadeChangeHandler())
                 .popChangeHandler(FadeChangeHandler()))
     }

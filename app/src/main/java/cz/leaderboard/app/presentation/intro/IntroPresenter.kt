@@ -30,7 +30,7 @@ class IntroPresenter @Inject constructor(val addBoardUseCase: AddBoardUseCase, v
 
     class AddBoardObserver constructor(view: IntroView): PresentationObserver<Board, IntroView>(view) {
         override fun onNext(boards: Board) {
-            onView { it.showFoundBoard() }
+            onView { it.showFoundBoard(boards) }
         }
 
         override fun onError(e: Throwable?) {
